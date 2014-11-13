@@ -1,0 +1,19 @@
+{
+    "name": "gs-angular-directives",
+    "version": "1.0.0",
+    "description": "Gautham's angularjs re-usable custom directives",
+    "main": "gs-angular-directives.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gautham1985/gs-angular-directives.git"
+    },
+    "keywords": [
+        "angular",
+        "framework",
+        "browser",
+        "animation",
+        "client-side"
+    ],
+    "author": "Gautham Stalin <gauthamstalin@gmail.com>",
+    "homepage": "https://github.com/gautham1985/gs-angular-directives"
+}
