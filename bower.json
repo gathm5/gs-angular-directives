@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "main": "./gs-angular-directives.js",
     "dependencies": {
+        "fastclick": "~1.0.3",
         "angular": ">= 1.2.0"
     }
 }

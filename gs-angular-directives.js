@@ -25,3 +25,15 @@ angular.module('gsDirectives', [])
             };
         }
     ])
+    .directive('fastClick', [
+        function () {
+            return {
+                restrict: 'EA',
+                link: function (scope, element) {
+                    if (FastClick) {
+                        FastClick.attach(element[0]);
+                    }
+                }
+            };
+        }
+    ]);
