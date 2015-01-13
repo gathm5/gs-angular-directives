@@ -1,0 +1,96 @@
+/* Web Intent */
+.web-intent {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    bottom: 0;
+    margin-bottom: 60px;
+}
+
+.web-intent .intent {
+    text-align: center;
+}
+
+.web-intent .intent .message {
+    display: inline-block;
+    max-width: 80%;
+    padding: 10px 12px;
+    background: #181818;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    font-size: 0.8em;
+    color: #ffffff;
+}
+
+.web-intent .intent-animation.ng-enter {
+    -webkit-animation: bounceIn 400ms;
+    animation: bounceIn 400ms;
+}
+
+.web-intent .intent-animation.ng-leave {
+    -webkit-animation: fadeOutDown 400ms;
+    animation: fadeOutDown 400ms;
+}
+
+/* Slide Out Menu */
+.slide-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.2);
+    display: none;
+}
+
+.slide-container .slide-menu {
+    position: absolute;
+    height: 100%;
+    -webkit-transition: all 200ms ease-in;
+    transition: all 200ms ease-in;
+}
+
+.slide-container.ready {
+    display: block;
+}
+
+.slide-container.show .slide-menu {
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    transform: translate3d(0, 0, 0) !important;
+}
+
+.slide-container.left .slide-menu {
+    top: 0;
+    left: 0;
+    width: 70%;
+    height: 100%;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+}
+
+.slide-container.right .slide-menu {
+    top: 0;
+    right: 0;
+    width: 70%;
+    height: 100%;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+}
+
+.slide-container.top .slide-menu {
+    top: 0;
+    height: 70%;
+    width: 100%;
+    -webkit-transform: translate3d(0, -100%, 0);
+    transform: translate3d(0, -100%, 0);
+}
+
+.slide-container.bottom .slide-menu {
+    bottom: 0;
+    height: 70%;
+    width: 100%;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+}

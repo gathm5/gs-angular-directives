@@ -1,9 +1,12 @@
 {
     "name": "gs-angular-directives",
-    "version": "1.0.1",
-    "main": "./gs-angular-directives.js",
+    "version": "1.0.2",
+    "main": [
+        "./gs-angular-directives.js",
+        "./gs-angular-directives.css"
+    ],
     "dependencies": {
         "fastclick": "~1.0.3",
-        "angular": ">= 1.2.0"
+        "angular": ">= 1.3.0"
     }
 }
