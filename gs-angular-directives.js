@@ -154,6 +154,102 @@ angular.module('gsDirectives', [])
             };
         }
     ])
+    .factory('drawerParams', function () {
+        var menuScope;
+        return {
+            isDrawerOpen: false,
+            register: function (scope) {
+                menuScope = scope;
+            },
+            unRegister: function () {
+                menuScope = null;
+            },
+            open: function () {
+                if (menuScope) {
+                    menuScope.$emit('Drawer Open');
+                }
+            },
+            toggle: function () {
+                if (menuScope) {
+                    menuScope.$emit('Drawer Toggle');
+                }
+            },
+            close: function () {
+                if (menuScope) {
+                    menuScope.$emit('Drawer Close');
+                }
+            }
+        };
+    })
+    .directive('drawer', [
+        'drawerParams',
+        '$timeout',
+        function (drawerParams) {
+            return {
+                restrict: 'E',
+                template: '<div class="drawer-container" ng-transclude></div>',
+                replace: true,
+                transclude: true,
+                link: function (scope, element, attr) {
+
+                    if (element[0].children.length !== 2) {
+                        alert('Expecting only two div inside the drawer')
+                        return;
+                    }
+
+                    switch (true) {
+                        case !angular.isUndefined(attr.right):
+                            element.addClass('right');
+                            break;
+                        case !angular.isUndefined(attr.top):
+                            element.addClass('top');
+                            break;
+                        case !angular.isUndefined(attr.bottom):
+                            element.addClass('bottom');
+                            break;
+                        default:
+                            element.addClass('left');
+                    }
+
+                    // If custom width is defined
+                    if (!angular.isUndefined(attr.width)) {
+                        element[0].children[0].width = attr.width;
+                        angular.element(element[0].children[0]).css('width', attr.width);
+                    }
+
+                    // If custom height is defined
+                    if (!angular.isUndefined(attr.height)) {
+                        element[0].children[0].height = attr.height;
+                        angular.element(element[0].children[0]).css('height', attr.height);
+                    }
+
+                    // Register the scope to the slide menu params
+                    drawerParams.register(scope);
+
+                    scope.close = function () {
+                        scope.$emit('Drawer Close');
+                    };
+
+                    // Handlers
+                    scope.$on('Drawer Open', function () {
+                        drawerParams.isDrawerOpen = true;
+                        element.addClass('active');
+                    });
+                    scope.$on('Drawer Toggle', function () {
+                        drawerParams.isDrawerOpen = !drawerParams.isDrawerOpen;
+                        element.toggleClass('active');
+                    });
+                    scope.$on('Drawer Close', function () {
+                        if (drawerParams.isDrawerOpen) {
+                            drawerParams.isDrawerOpen = false;
+                            element.removeClass('active');
+                        }
+                    });
+
+                }
+            };
+        }
+    ])
     .directive('fastClick', [
         function () {
             return {
