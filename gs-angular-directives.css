@@ -117,28 +117,44 @@
 .drawer-container .drawer-menu {
     position: absolute;
     z-index: 0;
+    -webkit-transition: all 200ms ease-in;
+    transition: all 200ms ease-in;
 }
 
 .drawer-container.left .drawer-menu {
     left: 0;
     top: 0;
-    width: 30%;
+    width: 70%;
     height: 100%;
+    -webkit-transform: translate3d(-20%, 0, 0);
+    transform: translate3d(-20%, 0, 0);
 }
 
 .drawer-container.left.active .drawer-pull {
-    -webkit-transform: translate3d(30%, 0, 0);
-    transform: translate3d(30%, 0, 0);
+    -webkit-transform: translate3d(70%, 0, 0);
+    transform: translate3d(70%, 0, 0);
+}
+
+.drawer-container.left.active .drawer-menu {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
 }
 
 .drawer-container.right .drawer-menu {
     right: 0;
     top: 0;
-    width: 30%;
+    width: 70%;
     height: 100%;
+    -webkit-transform: translate3d(20%, 0, 0);
+    transform: translate3d(20%, 0, 0);
 }
 
 .drawer-container.right.active .drawer-pull {
-    -webkit-transform: translate3d(-30%, 0, 0);
-    transform: translate3d(-30%, 0, 0);
+    -webkit-transform: translate3d(-70%, 0, 0);
+    transform: translate3d(-70%, 0, 0);
+}
+
+.drawer-container.right.active .drawer-menu {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
 }
