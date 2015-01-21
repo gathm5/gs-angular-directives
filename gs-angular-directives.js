@@ -140,8 +140,6 @@ angular.module('gsDirectives', [])
 
                     // On Element removal
                     scope.$on('$destroy', function () {
-                        handler.open();
-                        handler.close();
                         slideOutMenuParams.isSlideOpen = false;
                         slideOutMenuParams.unRegister();
                     });
@@ -193,7 +191,7 @@ angular.module('gsDirectives', [])
                 link: function (scope, element, attr) {
 
                     if (element[0].children.length !== 2) {
-                        alert('Expecting only two div inside the drawer')
+                        window.alert('Expecting only two div inside the drawer');
                         return;
                     }
 
@@ -261,4 +259,52 @@ angular.module('gsDirectives', [])
                 }
             };
         }
-    ]);
+    ])
+    .factory('gsEventManager', [
+        function () {
+            var scopeManager = {};
+            return {
+                register: function (id, scope) {
+                    scopeManager[id] = scope;
+                },
+                unRegister: function (id) {
+                    scopeManager[id] = null;
+                },
+                scope: function (id) {
+                    return scopeManager[id];
+                },
+                reset: function () {
+                    scopeManager = {};
+                }
+            };
+        }
+    ])
+    .factory('$eventManagementService', [
+        'gsEventManager',
+        function (EventManager) {
+            function message(id, event, params) {
+                EventManager.scope(id).$broadcast(event, params);
+            }
+
+            return message;
+        }
+    ])
+    .directive('gsEventDriven', [
+        'gsEventManager', function (EventManager) {
+            return {
+                restrict: 'A',
+                required: 'gsEventDriven',
+                link: function postLink(scope, element, attrs) {
+                    if (attrs.gsEventDriven) {
+                        EventManager.register(attrs.gsEventDriven, scope, element);
+                    }
+                    scope.$on('$destroy', function () {
+                        if (attrs.gsEventDriven) {
+                            EventManager.unRegister(attrs.gsEventDriven);
+                        }
+                    });
+                }
+            };
+        }
+    ])
+;
