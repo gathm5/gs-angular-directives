@@ -39,12 +39,12 @@ angular.module('gsDirectives', [])
                 element.bind('click', function (e) {
                     e.stopPropagation();
                 });
-                element.bind('mousedown', function (e) {
+                element.bind('touchstart', function (e) {
                     e.stopPropagation();
                 });
                 scope.$on('$destroy', function () {
                     element.unbind('click');
-                    element.unbind('mousedown');
+                    element.unbind('touchstart');
                 });
             }
         };
