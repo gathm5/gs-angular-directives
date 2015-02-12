@@ -158,3 +158,41 @@
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
 }
+/*
+date picker
+*/
+.gs-nice-font {
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 300;
+}
+.gs-picker {
+    height: 100%;
+    width: 100%;
+    background: #fff;
+}
+.gs-middle-me:after {
+    clear: both;
+    display: table;
+    content: ' ';
+}
+.gs-middle-me {
+    margin: 0 auto;
+    width: auto;
+}
+.gs-box-block {
+    float: left;
+    min-width: 120px;
+    text-align: center;
+    padding: 15px 0;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+}
+.gs-date-block {
+    color: #666666;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    font-size: 2em;
+}
+.gs-increase,
+.gs-decrease {
+    color: #ccc;
+}

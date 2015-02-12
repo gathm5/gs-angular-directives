@@ -272,58 +272,58 @@ angular.module('gsDirectives', [])
             function init() {
                 //Device Ready
                 $document[0].addEventListener('deviceReady', function (e) {
-                    $rootScope.$broadcast('$$ready', {
+                    $rootScope.$broadcast('$device.ready', {
                         eventDefault: e
                     });
-                    if (window.cordova && window.cordova.plugins.Keyboard) {
+                    if (window.cordova && cordova.plugins.Keyboard) {
                         cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
                     }
                 });
                 //Back button
                 $document[0].addEventListener('backbutton', function (e) {
-                    $rootScope.$broadcast('$$back', {
+                    $rootScope.$broadcast('$device.backbutton', {
                         eventDefault: e
                     });
                 });
                 //Menu Button
                 $document[0].addEventListener('menubutton', function (e) {
-                    $rootScope.$broadcast('$$menu', {
+                    $rootScope.$broadcast('$device.menubutton', {
                         eventDefault: e
                     });
                 });
                 //Blur
                 $document[0].addEventListener('blur', function (e) {
-                    $rootScope.$broadcast('$$blur', {
+                    $rootScope.$broadcast('$device.blur', {
                         eventDefault: e
                     });
                 });
                 //Focus
                 $document[0].addEventListener('focus', function (e) {
-                    $rootScope.$broadcast('$$focus', {
+                    $rootScope.$broadcast('$device.focus', {
                         eventDefault: e
                     });
                 });
                 //Pause
                 $document[0].addEventListener('pause', function (e) {
-                    $rootScope.$broadcast('$$pause', {
+                    $rootScope.$broadcast('$device.pause', {
                         eventDefault: e
                     });
                 });
                 //Resume
                 $document[0].addEventListener('resume', function (e) {
-                    $rootScope.$broadcast('$$resume', {
+                    $rootScope.$broadcast('$device.resume', {
                         eventDefault: e
                     });
                 });
                 //online
                 $document[0].addEventListener('online', function (e) {
-                    $rootScope.$broadcast('$$online', {
+                    $rootScope.$broadcast('$device.online', {
                         eventDefault: e
                     });
                 });
                 //offline
                 $document[0].addEventListener('offline', function (e) {
-                    $rootScope.$broadcast('$$offline', {
+                    $rootScope.$broadcast('$device.offline', {
                         eventDefault: e
                     });
                 });
@@ -349,4 +349,88 @@ angular.module('gsDirectives', [])
                 return isMobile;
             }];
         }
-    ]);
+    ])
+    .directive('gsDatePicker', function () {
+        return {
+            restrict: 'E',
+            template: '<div class="gs-date gs-picker"> <div class="gs-middle-me"> <div class="gs-increase"> <span class="gs-box-block" ng-click="change.monthUp()"> <i class="fa fa-chevron-up"></i> </span> <span class="gs-box-block" ng-click="change.dateUp()"> <i class="fa fa-chevron-up"></i> </span> <span class="gs-box-block" ng-click="change.yearUp()"> <i class="fa fa-chevron-up"></i> </span> </div> <div class="gs-date-block gs-nice-font"> <span class="gs-box-block"> {{gsDate.month}} </span> <span class="gs-box-block"> {{gsDate.date}} </span> <span class="gs-box-block"> {{gsDate.year}} </span> </div> <div class="gs-decrease"> <span class="gs-box-block" ng-click="change.monthDown()"> <i class="fa fa-chevron-down"></i> </span> <span class="gs-box-block" ng-click="change.dateDown()"> <i class="fa fa-chevron-down"></i> </span> <span class="gs-box-block" ng-click="change.yearDown()"> <i class="fa fa-chevron-down"></i> </span> </div> </div> <div class="gs-button" ng-click="change.today()"> set Today </div></div>',
+            scope: {
+                date: '='
+            },
+            link: function ($scope, element, attr) {
+                var months = [
+                    'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'
+                ];
+                var maxDates = [
+                    31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+                ];
+                $scope.gsDate = {
+                    date: null,
+                    month: null,
+                    year: null
+                };
+                $scope.change = {
+                    monthUp: function () {
+                        var idx = months.indexOf($scope.gsDate.month);
+                        idx + 1 > 11 ? idx = 0 : idx += 1;
+                        $scope.gsDate.month = months[idx];
+                    },
+                    monthDown: function () {
+                        var idx = months.indexOf($scope.gsDate.month);
+                        idx - 1 < 0 ? idx = 11 : idx -= 1;
+                        $scope.gsDate.month = months[idx];
+                    },
+                    dateUp: function () {
+                        var maxDate = 31;
+                        var idx = months.indexOf($scope.gsDate.month);
+                        var isLeap = new Date($scope.gsDate.year, 1, 29).getMonth() === 1;
+                        if (idx === 1 && isLeap) {
+                            maxDate = 29;
+                        } else {
+                            maxDate = maxDates[idx];
+                        }
+                        $scope.gsDate.date + 1 > maxDate ? $scope.gsDate.date = 1 : $scope.gsDate.date += 1;
+                    },
+                    dateDown: function () {
+                        var minDate = 31;
+                        var idx = months.indexOf($scope.gsDate.month);
+                        var isLeap = new Date($scope.gsDate.year, 1, 29).getMonth() === 1;
+                        if (idx === 1 && isLeap) {
+                            minDate = 29;
+                        } else {
+                            minDate = maxDates[idx];
+                        }
+                        $scope.gsDate.date - 1 < 1 ? $scope.gsDate.date = minDate : $scope.gsDate.date -= 1;
+                    },
+                    yearUp: function () {
+                        $scope.gsDate.year += 1;
+                    },
+                    yearDown: function () {
+                        $scope.gsDate.year -= 1;
+                    },
+                    today: function () {
+                        var now = new Date();
+                        $scope.gsDate.month = months[now.getMonth()];
+                        $scope.gsDate.date = now.getDate();
+                        $scope.gsDate.year = now.getFullYear();
+                    }
+                };
+                if ($scope.date) {
+                    if (typeof $scope.date.getMonth === 'function') {
+                        $scope.gsDate.month = months[$scope.date.getMonth()];
+                        $scope.gsDate.date = $scope.date.getDate();
+                        $scope.gsDate.year = $scope.date.getFullYear();
+                    }
+                }
+                else {
+                    $scope.change.today();
+                }
+                // Watch
+                $scope.$watch('gsDate', function (newDate, oldDate) {
+                    if (newDate && newDate !== oldDate) {
+                        $scope.date = new Date(newDate.year, newDate.date, newDate.month);
+                    }
+                });
+            }
+        };
+    });
