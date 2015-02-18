@@ -433,4 +433,35 @@ angular.module('gsDirectives', [])
                 });
             }
         };
+    })
+    .directive('gsInfiniteScroll', function () {
+        return {
+            restrict: 'A',
+            scope: {
+                callback: '='
+            },
+            link: function (scope, element) {
+
+                function unBindScroll() {
+                    element.unbind('scroll');
+                }
+
+
+                function bindScroll() {
+                    unBindScroll();
+                    element.bind('scroll', function () {
+                        if (element[0].scrollTop + element[0].offsetHeight >= element[0].scrollHeight) {
+                            scope.callback.call();
+                        }
+                    });
+                }
+
+                scope.$on('$destroy', function () {
+                    unBindScroll();
+                });
+
+                //Invoke
+                bindScroll();
+            }
+        };
     });
