@@ -5,7 +5,7 @@ angular.module('gsDirectives', [])
         '$timeout',
         function ($timeout) {
             return {
-                template: '<div class="web-intent"><div class="intent animate-fade-up" data-ng-if="message"><span class="message">{{message}}</span></div></div>',
+                template: '<div class="web-intent"><div class="intent intent-animation" data-ng-if="message"><span class="message">{{message}}</span></div></div>',
                 restrict: 'E',
                 replace: true,
                 controller: function postLink($scope) {
