@@ -1,6 +1,6 @@
 {
     "name": "gs-angular-directives",
-    "version": "1.0.3",
+    "version": "1.1.2",
     "main": [
         "./gs-angular-directives.js",
         "./gs-angular-directives.css"

@@ -64,11 +64,19 @@ angular.module('gsDirectives', [])
                     if (menuScope) {
                         menuScope.$emit('Menu Open');
                     }
+                    return true;
+                },
+                toggle: function () {
+                    if (menuScope) {
+                        menuScope.$emit('Menu Toggle');
+                    }
+                    return true;
                 },
                 close: function () {
                     if (menuScope) {
                         menuScope.$emit('Menu Close');
                     }
+                    return true;
                 }
             };
         }
@@ -132,6 +140,14 @@ angular.module('gsDirectives', [])
                             element.addClass('show');
                         }, ANIMATION_HELPER_TIME);
                     });
+                    scope.$on('Menu Toggle', function () {
+                        if (slideOutMenuParams.isSlideOpen) {
+                            scope.$emit('Menu Close');
+                        }
+                        else {
+                            scope.$emit('Menu Open');
+                        }
+                    });
                     scope.$on('Menu Close', function () {
                         if (slideOutMenuParams.isSlideOpen) {
                             slideOutMenuParams.isSlideOpen = false;
@@ -170,16 +186,19 @@ angular.module('gsDirectives', [])
                 if (menuScope) {
                     menuScope.$emit('Drawer Open');
                 }
+                return true;
             },
             toggle: function () {
                 if (menuScope) {
                     menuScope.$emit('Drawer Toggle');
                 }
+                return true;
             },
             close: function () {
                 if (menuScope) {
                     menuScope.$emit('Drawer Close');
                 }
+                return true;
             }
         };
     })
@@ -452,6 +471,7 @@ angular.module('gsDirectives', [])
                     element.bind('scroll', function () {
                         if (element[0].scrollTop + element[0].offsetHeight >= element[0].scrollHeight) {
                             scope.callback.call();
+                            scope.$apply();
                         }
                     });
                 }
