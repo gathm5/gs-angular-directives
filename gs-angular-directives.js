@@ -458,14 +458,14 @@ angular.module('gsDirectives', [])
             restrict: 'A',
             scope: {
                 callback: '=',
-                padding: '@'
+                scrollPadding: '@'
             },
             link: function (scope, element, attr) {
 
                 var padding = 0;
 
-                if (attr.padding) {
-                    padding = parseFloat(attr.padding);
+                if (attr.scrollPadding) {
+                    padding = parseFloat(attr.scrollPadding);
                 }
 
                 function unBindScroll() {
@@ -476,7 +476,7 @@ angular.module('gsDirectives', [])
                 function bindScroll() {
                     unBindScroll();
                     element.bind('scroll', function () {
-                        if (element[0].scrollTop + element[0].offsetHeight - padding >= element[0].scrollHeight) {
+                        if (element[0].scrollTop + element[0].offsetHeight >= element[0].scrollHeight - padding) {
                             scope.callback.call();
                             scope.$apply();
                         }
